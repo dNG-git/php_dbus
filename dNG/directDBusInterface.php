@@ -67,7 +67,7 @@ class directDBusInterface
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_guid;
 /**
-	* @var direct_dbus_session $socket_dbus D-BUS session oject
+	* @var directDBusSession $socket_dbus D-BUS session oject
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_session;
 /**
@@ -115,10 +115,8 @@ Construct the class using old and new behavior
 	* @param string $f_path D-BUS path
 	* @param string $f_interface D-BUS interface
 	* @param string $f_destination D-BUS destination address
+	* @param array $f_xml_array XML node array with interface description
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusInterface::getName()
-	* @uses  directDBusSession::getGuid()
-	* @uses  directDBusSession::getNle()
 	* @since v0.1.01
 */
 	/*#ifndef(PHP4) */public /* #*/function __construct (&$f_session,$f_path,$f_interface,$f_destination,$f_xml_array,$f_debug = false)
@@ -185,7 +183,6 @@ Construct the class using old and new behavior
 	* @param string $f_interface D-BUS interface
 	* @param string $f_destination D-BUS destination address
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusInterface::__construct()
 	* @since v0.1.01
 *\/
 	function directDBusInterface (&$f_session,$f_path,$f_interface,$f_destination,$f_xml_array,$f_debug = false) { $this->__construct ($f_session,$f_path,$f_interface,$f_destination,$f_xml_array,$f_debug); }
@@ -199,10 +196,6 @@ Construct the class using old and new behavior
 	* @param  string $f_method The name of the method being called.
 	* @param  array $f_arguments An enumerated array containing the parameters
 	*         passed to "__call()".
-	* @uses   directDBusSession::sendMethodCall()
-	* @uses   directDBusSession::sendMethodCallAsyncResponse()
-	* @uses   directDBusSession::sendMethodCallSyncResponse()
-	* @uses   directDBusSession::setFlag()
 	* @return mixed directDBusMessage object on success (true for calls); false
 	*         on error
 	* @since  v0.1.01

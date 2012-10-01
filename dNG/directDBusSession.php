@@ -178,7 +178,6 @@ Construct the class using old and new behavior
 	* @param string $f_path Path to the socket to connect to
 	* @param string $f_ext_dbus_path Path to the D-BUS PHP binding files.
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusSession::__construct()
 	* @since v0.1.01
 *\/
 	function directDBusSession ($f_path,$f_ext_dbus_path = "",$f_debug = false) { $this->__construct ($f_path,$f_ext_dbus_path,$f_debug); }
@@ -186,7 +185,6 @@ Construct the class using old and new behavior
 /**
 	* Destructor (PHP5) __destruct (directDBusSession)
 	*
-	* @uses  directDBusSession::disconnect()
 	* @since v0.1.00
 */
 	/*#ifndef(PHP4) */public /* #*/function __destruct () { $this->disconnect (); }
@@ -254,7 +252,6 @@ Construct the class using old and new behavior
 	* Reads and parses the response in the authentication process.
 	* 
 	* @param  boolean $f_return_response True to return the response
-	* @uses   directDBusSession::authRead()
 	* @return mixed Either an array ([0] command / result [1] data) or true on
 	*         success; false on error
 	* @since  v0.1.00
@@ -283,8 +280,7 @@ Construct the class using old and new behavior
 /**
 	* Writes data to the socket during an authentication process.
 	*
-	* @param  string $f_data Data for the authentication protocol to send. 
-	* @uses   directDBusSession::write()
+	* @param  string $f_data Data for the authentication protocol to send.
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -307,9 +303,7 @@ Construct the class using old and new behavior
 	* response.
 	*
 	* @param  string $f_data Data for the authentication protocol to send. 
-	* @param  boolean $f_return_response True to return the response 
-	* @uses   directDBusSession::authReadParseResponse()
-	* @uses   directDBusSession::authWrite()
+	* @param  boolean $f_return_response True to return the response
 	* @return mixed Data array on success; false on error
 	* @since  v0.1.00
 */
@@ -328,8 +322,6 @@ Construct the class using old and new behavior
 	*
 	* @param directDBusMessage &$f_message directDBusMessage object
 	* @param array $f_body Body array if applicable
-	* @uses  directDBusMessage::getHeader()
-	* @uses  directDBusSession::callbackCaller()
 	* @since v0.1.00
 */
 	/*#ifndef(PHP4) */public /* #*/function callback (&$f_message,$f_body)
@@ -425,7 +417,6 @@ Listeners
 	*
 	* @param  integer $f_timeout Timeout for incoming messages (in microseconds)
 	* @param  integer $f_messages Number of messages to parse
-	* @uses   directDBusMessages::callbackListen()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -444,7 +435,6 @@ Listeners
 	* @param  string $f_path D-BUS path the signal that emits a signal
 	* @param  string $f_interface D-BUS interface
 	* @param  string $f_member D-BUS member (method emitting the signal)
-	* @uses   directDBusSession::callbackCheck()
 	* @return mixed Signal ID on success; false on error
 	* @since  v0.1.00
 */
@@ -480,8 +470,6 @@ Listeners
 	* @param  string $f_member D-BUS member (method emitting the signal)
 	* @param  mixed $f_callback Function name string or array with
 	*         (&$object,"method") definition
-	* @uses   directDBusSession::callbackCheck()
-	* @uses   directDBusSession::callbackListenerId()
 	* @return mixed Registered signal ID on success; false on error
 	* @since  v0.1.00
 */
@@ -546,8 +534,6 @@ Listeners
 	* @param  string $f_member D-BUS member (method emitting the signal)
 	* @param  mixed $f_callback Function name string or array with
 	*         (&$object,"method") definition
-	* @uses   directDBusSession::callbackCheck()
-	* @uses   directDBusSession::callbackListenerId()
 	* @return mixed Unregistered signal ID on success; false on error
 	* @since  v0.1.00
 */
@@ -582,8 +568,6 @@ Listeners
 	* Connects to an active D-BUS socket.
 	*
 	* @param  integer $f_sync_timeout Timeout for synchronized requests
-	* @uses   directDBusSession::authHex()
-	* @uses   directDBusSession::authWriteParseResponse()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -910,7 +894,6 @@ Listeners
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessages::sendMethodCall()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */
@@ -937,7 +920,6 @@ Listeners
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessages::sendMethodCallAsyncResponse()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -961,7 +943,6 @@ Listeners
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessages::sendMethodCallSyncResponse()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */
@@ -983,7 +964,6 @@ Listeners
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessages::sendSignal()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */

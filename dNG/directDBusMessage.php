@@ -93,7 +93,6 @@ Construct the class using old and new behavior
 	*
 	* @param directDBusMessages $f_messages D-BUS message handler
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusMessages::getNle()
 	* @since v0.1.00
 */
 	/*#ifndef(PHP4) */public /* #*/function __construct ($f_messages,$f_debug = false)
@@ -111,7 +110,6 @@ Construct the class using old and new behavior
 	*
 	* @param directDBusMessages $f_messages D-BUS message handler
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusMessage::__construct()
 	* @since v0.1.01
 *\/
 	function directDBusMessage ($f_messages,$f_debug = false) { $this->__construct ($f_messages,$f_debug); }
@@ -338,11 +336,6 @@ Construct the class using old and new behavior
 	* @param  string $f_signature Data signature
 	* @param  array $f_data Data array
 	* @param  integer $f_position Position within the array - usually 0
-	* @uses   directDBusMessage::getCompleteType()
-	* @uses   directDBusMessage::marshalArray()
-	* @uses   directDBusMessage::marshalSetBoundary()
-	* @uses   directDBusMessage::marshalSetNle()
-	* @uses   directDBusMessage::typeGetPositionPadding()
 	* @return mixed Marshaled string on success; false on error
 	* @since  v0.1.00
 */
@@ -782,7 +775,6 @@ Construct the class using old and new behavior
 	*
 	* @param  string $f_type Type code (ASCII)
 	* @param  integer $f_position Current position in the byte string
-	* @uses   directDBusMessage::typeGetPadding()
 	* @return integer New position (Position of the needed boundary)
 	* @since  v0.1.00
 */
@@ -812,12 +804,6 @@ Construct the class using old and new behavior
 	* @param  string $f_signature Data signature
 	* @param  string &$f_data Byte data
 	* @param  integer $f_position
-	* @uses   directDBusMessage::getCompleteType()
-	* @uses   directDBusMessage::typeGetPositionPadding()
-	* @uses   directDBusMessage::unmarshal()
-	* @uses   directDBusMessage::unmarshalGetBoundary()
-	* @uses   directDBusMessage::unmarshalRead()
-	* @uses   directDBusMessage::unmarshalSetLe()
 	* @return mixed Data array on success; false on error
 	* @since  v0.1.00
 */

@@ -119,9 +119,6 @@ Construct the class using old and new behavior
 	* @param directDBusSession $f_session D-BUS session object
 	* @param integer $f_sync_timeout Timeout for synchronized requests
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusMessages::getName()
-	* @uses  directDBusSession::getGuid()
-	* @uses  directDBusSession::getNle()
 	* @since v0.1.00
 */
 	/*#ifndef(PHP4) */public /* #*/function __construct (&$f_session,$f_sync_timeout = 3,$f_debug = false)
@@ -151,7 +148,6 @@ Construct the class using old and new behavior
 	* @param directDBusSession $f_session D-BUS session object
 	* @param integer $f_sync_timeout Timeout for synchronized requests
 	* @param boolean $f_debug Debug flag
-	* @uses  directDBusMessages::__construct()
 	* @since v0.1.01
 *\/
 	function directDBusMessages (&$f_session,$f_sync_timeout = 3,$f_debug = false) { $this->__construct ($f_session,$f_sync_timeout,$f_debug); }
@@ -161,10 +157,6 @@ Construct the class using old and new behavior
 	* 
 	* @param  string $f_le Endian mode used for this message
 	* @param  directDBusMessage &$f_message directDBusMessage object
-	* @uses   directDBusMessage::getHeader()
-	* @uses   directDBusMessage::getRawBody()
-	* @uses   directDBusMessage::unmarshal()
-	* @uses   directDBusSession::callback()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -208,7 +200,6 @@ Construct the class using old and new behavior
 	*
 	* @param  integer $f_timeout Timeout for incoming messages (in microseconds)
 	* @param  integer $f_messages Number of messages to parse
-	* @uses   directDBusMessages::callbackListen()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -269,7 +260,6 @@ Construct the class using old and new behavior
 /**
 	* Return the D-BUS name given by the bus.
 	*
-	* @uses   directDBusMessages::sendMethodCallSyncResponse()
 	* @return mixed Name string on success; false on error
 	* @since  v0.1.00
 */
@@ -310,10 +300,6 @@ Construct the class using old and new behavior
 	* state for later continuation.
 	*
 	* @param  integer $f_timeout Timeout limit in seconds
-	* @uses   directDBusMessage::set()
-	* @uses   directDBusMessage::unmarshal()
-	* @uses   directDBusMessages::sendMethodCallSyncResponse()
-	* @uses   directDBusSession::read()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */
@@ -418,9 +404,6 @@ Construct the class using old and new behavior
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessage::marshalArray()
-	* @uses   directDBusMessage::marshalSetBoundary()
-	* @uses   directDBusMessage::set()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */
@@ -500,9 +483,6 @@ array (3,(array ("s",$f_member))),
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessage::getRaw()
-	* @uses   directDBusMessages::sendBuildMessage()
-	* @uses   directDBusSession::write()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -539,11 +519,6 @@ array (3,(array ("s",$f_member))),
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessage::getRaw()
-	* @uses   directDBusMessages::sendBuildMessage()
-	* @uses   directDBusSession::callbackCheck()
-	* @uses   directDBusSession::callbackRegisterSerial()
-	* @uses   directDBusSession::write()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -588,8 +563,6 @@ array (3,(array ("s",$f_member))),
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessages::sendBuildMessage()
-	* @uses   directDBusMessages::sendSyncResponse()
 	* @return mixed directDBusMessage object on success; false on error
 	* @since  v0.1.00
 */
@@ -614,9 +587,6 @@ array (3,(array ("s",$f_member))),
 	*         Specification 1.0 or generated using directDBusSession.
 	* @param  string $f_signature D-BUS body signature
 	* @param  string $f_parameter D-BUS body content parameters
-	* @uses   directDBusMessage::getRaw()
-	* @uses   directDBusMessages::sendBuildMessage()
-	* @uses   directDBusSession::write()
 	* @return boolean True on success
 	* @since  v0.1.00
 */
@@ -644,12 +614,6 @@ array (3,(array ("s",$f_member))),
 	* Sends a message and waits for the response.
 	* 
 	* @param  directDBusMessage &$f_message directDBusMessage object
-	* @uses   directDBusMessage::getHeader()
-	* @uses   directDBusMessage::getRaw()
-	* @uses   directDBusMessage::getRawBody()
-	* @uses   directDBusMessage::unmarshal()
-	* @uses   directDBusMessages::callback()
-	* @uses   directDBusSession::write()
 	* @return mixed Array (message -> directDBusMessage object,body -> body
 	*         array) on success; false on error
 	* @since  v0.1.00
