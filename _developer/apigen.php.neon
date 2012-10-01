@@ -1,3 +1,5 @@
+# D-BUS PHP Binding
+
 # Source file or directory to parse
 #source: ../dNG
 # Use a generated source tree directory
@@ -31,3 +33,5 @@ colors: No
 updateCheck: No
 # Display additional information in case of an error
 debug: No
+
+# EOF
