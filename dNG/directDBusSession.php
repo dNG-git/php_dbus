@@ -1086,4 +1086,3 @@ define ("CLASS_directDBusSession",true);
 }
 
 //j// EOF
-?>

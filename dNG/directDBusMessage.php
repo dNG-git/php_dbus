@@ -1262,4 +1262,3 @@ define ("CLASS_directDBusMessage",true);
 }
 
 //j// EOF
-?>

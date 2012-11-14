@@ -716,4 +716,3 @@ define ("CLASS_directDBusMessages",true);
 }
 
 //j// EOF
-?>

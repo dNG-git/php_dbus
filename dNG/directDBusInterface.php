@@ -297,4 +297,3 @@ define ("CLASS_directDBusInterface",true);
 }
 
 //j// EOF
-?>
