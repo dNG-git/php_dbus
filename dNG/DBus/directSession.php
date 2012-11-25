@@ -38,7 +38,7 @@ NOTE_END //n*/
 /*#ifdef(PHP5n) */
 
 namespace dNG\DBus;
-/* #\n*/
+/* #*/
 /*#use(direct_use) */
 use \dNG\data\directFile;
 /* #\n*/
