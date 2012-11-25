@@ -184,7 +184,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function authHex ($data,$decode = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authHex ($data,+f_decode)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authHex ($data,+decode)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ($decode) { $return = @pack("H*",$data); }
@@ -243,7 +243,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function authReadParseResponse ($return_response = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authReadParseResponse (+f_return_response)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authReadParseResponse (+return_response)- (#echo(__LINE__)#)"); }
 
 		$return = false;
 		$data_read = $this->authRead ();
@@ -294,7 +294,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function authWriteParseResponse ($data,$return_response = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authWriteParseResponse ($data,+f_return_response)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->authWriteParseResponse ($data,+return_response)- (#echo(__LINE__)#)"); }
 
 		$return = false;
 		if ($this->authWrite ($data)) { $return = $this->authReadParseResponse ($return_response); }
@@ -311,7 +311,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function callback (&$message,$body)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callback (+f_message,+f_body)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callback (+message,+body)- (#echo(__LINE__)#)"); }
 
 		if ((is_object ($message))&&(is_array ($body)))
 		{
@@ -365,7 +365,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */protected /* #*/function callbackCaller ($callbacks,&$message,$body)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackCaller (+f_callbacks,+f_message,+f_body)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackCaller (+callbacks,+message,+body)- (#echo(__LINE__)#)"); }
 
 		if ((is_array ($callbacks))&&(is_object ($message))&&(is_array ($body)))
 		{
@@ -387,7 +387,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function callbackCheck ($callback)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackCheck (+f_callback)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackCheck (+callback)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ((is_string ($callback))&&(function_exists ($callback))) { $return = true; }
@@ -425,7 +425,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */protected /* #*/function callbackListenerId ($type,$path,$interface,$member)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackListenerId ($type,$path,$interface,$member,+f_callback)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackListenerId ($type,$path,$interface,$member,+callback)- (#echo(__LINE__)#)"); }
 
 		if ((is_string ($type))&&(is_string ($path))&&(is_string ($interface))&&(is_string ($member)))
 		{
@@ -460,7 +460,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function callbackRegisterListener ($type,$path,$interface,$member,$callback)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackRegisterListener ($type,$path,$interface,$member,+f_callback)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackRegisterListener ($type,$path,$interface,$member,+callback)- (#echo(__LINE__)#)"); }
 
 		$return = $this->callbackCheck ($callback);
 		if ($return) { $return = $this->callbackListenerId ($type,$path,$interface,$member); }
@@ -497,7 +497,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function callbackRegisterSerial ($serial,$callback)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackRegisterSerial ($serial,+f_callback)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackRegisterSerial ($serial,+callback)- (#echo(__LINE__)#)"); }
 
 		if (!isset ($this->dbus_callbacks[$serial])) { $this->dbus_callbacks[$serial] = array (); }
 
@@ -524,7 +524,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function callbackUnregisterListener ($type,$path,$interface,$member,$callback)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackUnregisterListener ($type,$path,$interface,$member,+f_callback)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callbackUnregisterListener ($type,$path,$interface,$member,+callback)- (#echo(__LINE__)#)"); }
 
 		$return = $this->callbackCheck ($callback);
 		if ($return) { $return = $this->callbackListenerId ($type,$path,$interface,$member); }
@@ -815,7 +815,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function read ($length,$timeout,$length_forced = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->read ($length,$timeout,+f_length_forced)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->read ($length,$timeout,+length_forced)- (#echo(__LINE__)#)"); }
 		$return = "";
 
 		if ((is_resource ($this->socket_dbus))&&($length))
@@ -873,7 +873,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCall ($path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCall ($path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCall ($path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))) { return $this->dbus_messages->sendMethodCall ($path,$interface,$member,$destination,$flags,$signature,$parameter); }
 		else { return false; }
@@ -899,7 +899,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCallAsyncResponse ($callback,$path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallAsyncResponse (+f_callback,$path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallAsyncResponse (+callback,$path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))) { return $this->dbus_messages->sendMethodCallAsyncResponse ($callback,$path,$interface,$member,$destination,$flags,$signature,$parameter); }
 		else { return false; }
@@ -922,7 +922,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCallSyncResponse ($path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallSyncResponse ($path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallSyncResponse ($path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))) { return $this->dbus_messages->sendMethodCallSyncResponse ($path,$interface,$member,$destination,$flags,$signature,$parameter); }
 		else { return false; }
@@ -943,7 +943,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function sendSignal ($path,$interface,$member,$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSignal ($path,$interface,$member,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSignal ($path,$interface,$member,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))) { return $this->dbus_messages->sendSignal ($path,$interface,$member,$flags,$signature,$parameter); }
 		else { return false; }
@@ -959,7 +959,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function setAuthCookie ($path = "",$owner = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setAuthCookie ($path,+f_owner)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setAuthCookie ($path,+owner)- (#echo(__LINE__)#)"); }
 
 		if (function_exists ("sha1"))
 		{
@@ -995,7 +995,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function setFlag ($flag = "",$status = NULL,$flags = "")
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setFlag ($flag,+f_status,+f_flags)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setFlag ($flag,+status,+flags)- (#echo(__LINE__)#)"); }
 
 		if (strlen ($flags)) { $return = $flags; }
 		else { $return = 0; }
@@ -1052,7 +1052,7 @@ Listeners
 */
 	/*#ifndef(PHP4) */public /* #*/function write ($data)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->write (+f_data)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->write (+data)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ((is_resource ($this->socket_dbus))&&(!empty ($data)))

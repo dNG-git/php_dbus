@@ -196,7 +196,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function __call ($method,$arguments)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->__call ($method,+f_arguments)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->__call ($method,+arguments)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if (strlen ($this->interface))
@@ -289,7 +289,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function setFlags ($flags = "")
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setFlags (+f_flags)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->setFlags (+flags)- (#echo(__LINE__)#)"); }
 		if (strlen ($flags)) { $this->flags = $flags; }
 	}
 }

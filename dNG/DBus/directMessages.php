@@ -156,7 +156,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function callback ($le,&$message)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callback ($le,+f_message)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->callback ($le,+message)- (#echo(__LINE__)#)"); }
 		$return = is_object ($this->dbus_session);
 
 		if ($return)
@@ -402,7 +402,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function sendBuildMessage ($type,$path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendBuildMessage ($type,$path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendBuildMessage ($type,$path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 		$return = is_object ($this->dbus_session);
 
 		if (($return)&&(is_string ($path))&&(strlen ($path))&&(is_string ($interface))&&(is_string ($member))&&(strlen ($member))&&(is_string ($destination)))
@@ -481,7 +481,7 @@ array (3,(array ("s",$member))),
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCall ($path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCall ($path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCall ($path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		if ($flags == NULL) { $flags = 1; }
 		else { $flags |= 1; }
@@ -517,7 +517,7 @@ array (3,(array ("s",$member))),
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCallAsyncResponse ($callback,$path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallAsyncResponse (+f_callback,$path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallAsyncResponse (+callback,$path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 
 		$return = $this->dbus_session->callbackCheck ($callback);
 		if ($return) { $return = $this->sendBuildMessage (1,$path,$interface,$member,$destination,$flags,$signature,$parameter); }
@@ -561,7 +561,7 @@ array (3,(array ("s",$member))),
 */
 	/*#ifndef(PHP4) */public /* #*/function sendMethodCallSyncResponse ($path,$interface,$member,$destination = "",$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallSyncResponse ($path,$interface,$member,$destination,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendMethodCallSyncResponse ($path,$interface,$member,$destination,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		$message = $this->sendBuildMessage (1,$path,$interface,$member,$destination,$flags,$signature,$parameter);
@@ -585,7 +585,7 @@ array (3,(array ("s",$member))),
 */
 	/*#ifndef(PHP4) */public /* #*/function sendSignal ($path,$interface,$member,$flags = NULL,$signature = "",$parameter = NULL)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSignal ($path,$interface,$member,+flags,$signature,+f_parameter)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSignal ($path,$interface,$member,+flags,$signature,+parameter)- (#echo(__LINE__)#)"); }
 		$return = ((strlen ($interface)) ? true : false);
 
 		if ($flags == NULL) { $flags = 1; }
@@ -612,7 +612,7 @@ array (3,(array ("s",$member))),
 */
 	/*#ifndef(PHP4) */protected /* #*/function sendSyncResponse (&$message)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSyncResponse (+f_message)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->sendSyncResponse (+message)- (#echo(__LINE__)#)"); }
 
 		$continue_check = true;
 		$return = is_object ($this->dbus_session);

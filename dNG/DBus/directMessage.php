@@ -335,7 +335,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function marshalArray ($signature,&$data,$position = 0)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalArray ($signature,+f_data,$position)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalArray ($signature,+data,$position)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ((is_string ($signature))&&(is_array ($data)))
@@ -607,7 +607,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function marshalSetBoundary (&$data,$position,$boundary_spec)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetBoundary (+f_data,$position,$boundary_spec)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetBoundary (+data,$position,$boundary_spec)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
 		if (((is_string ($data)))&&($position > 1)&&($boundary_spec > 1))
@@ -635,7 +635,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function marshalSetNle ($data)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetNle (+f_data)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetNle (+data)- (#echo(__LINE__)#)"); }
 
 		if ((!$this->nle)&&(strlen ($data) > 1))
 		{
@@ -664,7 +664,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function set ($header,$raw,$overwrite = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->set (+f_header,$raw,+f_overwrite)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->set (+header,$raw,+overwrite)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ((is_array ($header))&&(is_string ($raw))&&(($overwrite)||(($this->dbus_header == NULL)&&($this->dbus_raw == NULL))))
@@ -815,7 +815,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function unmarshal ($le,$signature,&$data,$position = -1)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshal (+f_le,$signature,+f_data,$position)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshal (+le,$signature,+data,$position)- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ((is_string ($signature))&&(is_string ($data)))
@@ -1207,7 +1207,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function unmarshalRead (&$data,$offset,$length)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalRead (+f_data,$offset,$length)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalRead (+data,$offset,$length)- (#echo(__LINE__)#)"); }
 
 		if ((is_string ($data))&&(is_numeric ($offset))&&(is_numeric ($length))&&(strlen ($data) >= $offset + $length)) { return substr ($data,$offset,$length); }
 		else { return false; }
@@ -1225,7 +1225,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */protected /* #*/function unmarshalSetLe ($le,$unpack_mode,$data)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalSetLe ($le,$unpack_mode,+f_data)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalSetLe ($le,$unpack_mode,+data)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
 		if (is_string ($data))
