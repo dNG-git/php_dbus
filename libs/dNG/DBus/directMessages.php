@@ -14,18 +14,17 @@ obtain one at http://mozilla.org/MPL/2.0/.
 ----------------------------------------------------------------------------
 http://www.direct-netware.de/redirect.php?licenses;mpl2
 ----------------------------------------------------------------------------
-#echo(extDBusVersion)#
-ext_dbus/#echo(__FILEPATH__)#
+#echo(phpDBusVersion)#
+#echo(__FILEPATH__)#
 ----------------------------------------------------------------------------
 NOTE_END //n*/
 /**
-* This file provides an sWG independent binary message implementation of the
-* D-BUS 1.0 specification.
+* This file provides an independent binary message implementation of the D-BUS
+* 1.0 specification.
 * 
-* @internal  We are using phpDocumentor to automate the documentation process
-*            for creating the Developer's Manual. All sections including
-*            these special comments will be removed from the release source
-*            code.
+* @internal  We are using ApiGen to automate the documentation process for
+*            creating the Developer's Manual. All sections including these
+*            special comments will be removed from the release source code.
 *            Use the following line to ensure 76 character sizes:
 * ----------------------------------------------------------------------------
 * @author    direct Netware Group
@@ -93,7 +92,7 @@ class directMessages
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_sync_timeout;
 /**
-	* @var object $this->event_handler The EventHandler is called whenever debug messages
+	* @var object $event_handler The EventHandler is called whenever debug messages
 	*      should be logged or errors happened.
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $event_handler;

@@ -3,7 +3,7 @@
 D-BUS PHP Binding
 
 (C) direct Netware Group - All rights reserved
-http://www.direct-netware.de/redirect.php?ext_dbus
+http://www.direct-netware.de/redirect.php?php;dbus
 
 This Source Code Form is subject to the terms of the Mozilla Public License,
 v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -11,16 +11,16 @@ obtain one at http://mozilla.org/MPL/2.0/.
 
 http://www.direct-netware.de/redirect.php?licenses;mpl2
 // -->
-<project name="extDBus">
-	<dirname property="extDBus.basedir" file="${ant.file}" />
-	<property file="${extDBus.basedir}/_extras/build.properties" />
+<project name="DBus.php" default="compile.phpBuilder">
+	<dirname property="src.basedir" file="${ant.file}" />
+	<property file="${src.basedir}/_extras/build.properties" />
 
-	<target name="compile.phpBuilder" description="Compile module ${ant.project.name}">
+	<target name="compile.phpBuilder" description="Compile src.php ${ant.project.name}">
 		<exec executable="python">
 			<arg file="${phpBuilder.filePathName}" />
 			<arg value="--filetype=${phpBuilder.fileTypes}" />
-			<arg value="--include=${extDBus.basedir}/dNG" />
-			<arg value="--strip_prefix=${extDBus.basedir}/" />
+			<arg value="--include=${src.basedir}/libs/" />
+			<arg value="--strip_prefix=${src.basedir}/libs/" />
 		</exec>
 	</target>
 </project>

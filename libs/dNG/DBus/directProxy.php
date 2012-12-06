@@ -14,18 +14,17 @@ obtain one at http://mozilla.org/MPL/2.0/.
 ----------------------------------------------------------------------------
 http://www.direct-netware.de/redirect.php?licenses;mpl2
 ----------------------------------------------------------------------------
-#echo(extDBusVersion)#
-ext_dbus/#echo(__FILEPATH__)#
+#echo(phpDBusVersion)#
+#echo(__FILEPATH__)#
 ----------------------------------------------------------------------------
 NOTE_END //n*/
 /**
-* This file provides an sWG independent binary message implementation of the
-* D-BUS 1.0 specification.
+* This file provides an independent binary message implementation of the D-BUS
+* 1.0 specification.
 * 
-* @internal  We are using phpDocumentor to automate the documentation process
-*            for creating the Developer's Manual. All sections including
-*            these special comments will be removed from the release source
-*            code.
+* @internal  We are using ApiGen to automate the documentation process for
+*            creating the Developer's Manual. All sections including these
+*            special comments will be removed from the release source code.
 *            Use the following line to ensure 76 character sizes:
 * ----------------------------------------------------------------------------
 * @author    direct Netware Group
@@ -48,7 +47,7 @@ all development packets)
 //j// Functions and classes
 
 /**
-* The "directInterface" class provides methods for the D-BUS message
+* The "directProxy" class provides methods for the D-BUS message
 * flow.
 *
 * @author    direct Netware Group
@@ -58,7 +57,7 @@ all development packets)
 * @license   http://www.direct-netware.de/redirect.php?licenses;mpl2
 *            Mozilla Public License, v. 2.0
 */
-class directInterface
+class directProxy
 {
 /**
 	* @var string $dbus_guid D-BUS GUID
@@ -73,7 +72,7 @@ class directInterface
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $destination;
 /**
-	* @var object $this->event_handler The EventHandler is called whenever debug messages
+	* @var object $event_handler The EventHandler is called whenever debug messages
 	*      should be logged or errors happened.
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $event_handler;
@@ -103,7 +102,7 @@ Construct the class using old and new behavior
 ------------------------------------------------------------------------- */
 
 /**
-	* Constructor (PHP5) __construct (directInterface)
+	* Constructor (PHP5) __construct (directProxy)
 	*
 	* @param directSession $session D-BUS session object
 	* @param string $path D-BUS path
@@ -115,7 +114,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function __construct (&$session,$path,$interface,$destination,$xml_array,$event_handler = NULL)
 	{
-		if ($event_handler !== NULL) { $event_handler->debug ("#echo(__FILEPATH__)# -dbus->__construct (directInterface)- (#echo(__LINE__)#)"); }
+		if ($event_handler !== NULL) { $event_handler->debug ("#echo(__FILEPATH__)# -dbus->__construct (directProxy)- (#echo(__LINE__)#)"); }
 		$this->dbus_guid = $session->getGuid ();
 
 		if ($this->dbus_guid)
@@ -170,7 +169,7 @@ Construct the class using old and new behavior
 	}
 /*#ifdef(PHP4):
 /**
-	* Constructor (PHP4) directInterface
+	* Constructor (PHP4) directProxy
 	*
 	* @param directSession $session D-BUS session object
 	* @param string $path D-BUS path
@@ -179,7 +178,7 @@ Construct the class using old and new behavior
 	* @param object $event_handler EventHandler to use
 	* @since v0.1.01
 *\/
-	function directInterface (&$session,$path,$interface,$destination,$xml_array,$event_handler = NULL) { $this->__construct ($session,$path,$interface,$destination,$xml_array,$event_handler); }
+	function directProxy (&$session,$path,$interface,$destination,$xml_array,$event_handler = NULL) { $this->__construct ($session,$path,$interface,$destination,$xml_array,$event_handler); }
 :#\n*/
 /**
 	* This method is called for "overloaded" or "inaccessible" methods of an

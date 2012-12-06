@@ -14,18 +14,17 @@ obtain one at http://mozilla.org/MPL/2.0/.
 ----------------------------------------------------------------------------
 http://www.direct-netware.de/redirect.php?licenses;mpl2
 ----------------------------------------------------------------------------
-#echo(extDBusVersion)#
-ext_dbus/#echo(__FILEPATH__)#
+#echo(phpDBusVersion)#
+#echo(__FILEPATH__)#
 ----------------------------------------------------------------------------
 NOTE_END //n*/
 /**
-* This file provides an sWG independent implementation of the D-BUS 1.0
+* This file provides an independent implementation of the D-BUS 1.0
 * specification.
 *
-* @internal  We are using phpDocumentor to automate the documentation process
-*            for creating the Developer's Manual. All sections including
-*            these special comments will be removed from the release source
-*            code.
+* @internal  We are using ApiGen to automate the documentation process for
+*            creating the Developer's Manual. All sections including these
+*            special comments will be removed from the release source code.
 *            Use the following line to ensure 76 character sizes:
 * ----------------------------------------------------------------------------
 * @author    direct Netware Group
@@ -40,7 +39,7 @@ NOTE_END //n*/
 namespace dNG\DBus;
 /* #*/
 /*#use(direct_use) */
-use \dNG\data\directFile;
+use dNG\data\directFile;
 /* #\n*/
 
 /* -------------------------------------------------------------------------
@@ -80,7 +79,7 @@ class directSession
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_messages;
 /**
-	* @var object $this->event_handler The EventHandler is called whenever debug messages
+	* @var object $event_handler The EventHandler is called whenever debug messages
 	*      should be logged or errors happened.
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $event_handler;
@@ -148,12 +147,7 @@ Construct the class using old and new behavior
 		$this->socket_available = function_exists ("fsockopen");
 		$this->socket_dbus = NULL;
 
-		if ((class_exists (/*#ifdef(PHP5n) */'\dNG\DBus\directMessage'/* #*//*#ifndef(PHP5n):"directMessage":#*/))&&(class_exists (/*#ifdef(PHP5n) */'\dNG\DBus\directMessages'/* #*//*#ifndef(PHP5n):"directMessages":#*/)))
-		{
-			if (stripos ($path,"unix:abstract://") === 0) { $this->socket_path = preg_replace ("#unix:abstract:\/\/#i","unix://\x00",$path); }
-			else { $this->socket_path = $path; }
-		}
-
+		if ((class_exists (/*#ifdef(PHP5n) */'dNG\DBus\directMessage'/* #*//*#ifndef(PHP5n):"directMessage":#*/))&&(class_exists (/*#ifdef(PHP5n) */'\dNG\DBus\directMessages'/* #*//*#ifndef(PHP5n):"directMessages":#*/))) { $this->socket_path = ((stripos ($path,"unix:abstract://") === 0) ? preg_replace ("#unix:abstract:\/\/#i","unix://\x00",$path) : $path); }
 		$this->socket_timeout = 15;
 		$this->xml_parser = NULL;
 	}
@@ -610,7 +604,7 @@ Listeners
 				$auth_response = $this->authWriteParseResponse ("AUTH DBUS_COOKIE_SHA1 ".($this->authHex ($username)),true);
 				$return = false;
 
-				if ((class_exists (/*#ifdef(PHP5n) */'\dNG\data\directFile'/* #*//*#ifndef(PHP5n):"directFile":#*/))&&(is_array ($auth_response))&&($auth_response[0] == "DATA"))
+				if ((class_exists (/*#ifdef(PHP5n) */'dNG\data\directFile'/* #*//*#ifndef(PHP5n):"directFile":#*/))&&(is_array ($auth_response))&&($auth_response[0] == "DATA"))
 				{
 					$auth_response = explode (" ",($this->authHex ($auth_response[1],true)),3);
 
@@ -649,7 +643,7 @@ Listeners
 				$auth_response = $this->authWriteParseResponse ("AUTH EXTENSION_COOKIE_HMAC_SHA256",true);
 				$return = false;
 
-				if ((class_exists (/*#ifdef(PHP5n) */'\dNG\data\directFile'/* #*//*#ifndef(PHP5n):"directFile":#*/))&&(is_array ($auth_response))&&($auth_response[0] == "DATA"))
+				if ((class_exists (/*#ifdef(PHP5n) */'dNG\data\directFile'/* #*//*#ifndef(PHP5n):"directFile":#*/))&&(is_array ($auth_response))&&($auth_response[0] == "DATA"))
 				{
 					$auth_response[1] = $this->authHex ($auth_response[1],true);
 
@@ -765,34 +759,6 @@ Listeners
 	}
 
 /**
-	* Returns an interface object for the given path.
-	*
-	* @param  string $path D-BUS path
-	* @param  string $interface D-BUS interface
-	* @param  string $destination D-BUS destination address
-	* @return mixed File handle on success; false on error
-	* @since  v0.1.01
-*/
-	/*#ifndef(PHP4) */public /* #*/function getInterface ($path,$interface,$destination)
-	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getInterface ($path,$interface,$destination)- (#echo(__LINE__)#)"); }
-		$return = false;
-
-		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))&&(class_exists (/*#ifdef(PHP5n) */'\dNG\DBus\directInterface'/* #*//*#ifndef(PHP5n):"directInterface":#*/))&&($this->xml_parser != NULL))
-		{
-			$result = $this->sendMethodCallSyncResponse ($path,"org.freedesktop.DBus.Introspectable","Introspect",$destination);
-
-			if ((!is_bool ($result))&&(isset ($result['body'][0])))
-			{
-				$result = $result['body'][0];
-				$return = new directInterface ($this,$path,$interface,$destination,($this->xml_parser->xml2array ($result)));
-			}
-		}
-
-		return $return;
-	}
-
-/**
 	* Receives the result of the endian check.
 	*
 	* @return boolean True if this system is a native little endian one
@@ -802,6 +768,34 @@ Listeners
 	{
 		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getNle ()- (#echo(__LINE__)#)"); }
 		return $this->nle;
+	}
+
+/**
+	* Returns an proxy object for the given path.
+	*
+	* @param  string $path D-BUS path
+	* @param  string $interface D-BUS interface
+	* @param  string $destination D-BUS destination address
+	* @return mixed File handle on success; false on error
+	* @since  v0.1.01
+*/
+	/*#ifndef(PHP4) */public /* #*/function getProxy ($path,$interface,$destination)
+	{
+		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getProxy ($path,$interface,$destination)- (#echo(__LINE__)#)"); }
+		$return = false;
+
+		if ((is_resource ($this->socket_dbus))&&(is_object ($this->dbus_messages))&&(class_exists (/*#ifdef(PHP5n) */'dNG\DBus\directProxy'/* #*//*#ifndef(PHP5n):"directProxy":#*/))&&($this->xml_parser != NULL))
+		{
+			$result = $this->sendMethodCallSyncResponse ($path,"org.freedesktop.DBus.Introspectable","Introspect",$destination);
+
+			if ((!is_bool ($result))&&(isset ($result['body'][0])))
+			{
+				$result = $result['body'][0];
+				$return = new directProxy ($this,$path,$interface,$destination,($this->xml_parser->xml2array ($result)));
+			}
+		}
+
+		return $return;
 	}
 
 /**
