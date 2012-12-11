@@ -6,7 +6,7 @@
 D-BUS PHP Binding
 ----------------------------------------------------------------------------
 (C) direct Netware Group - All rights reserved
-http://www.direct-netware.de/redirect.php?ext_dbus
+http://www.direct-netware.de/redirect.php?php;dbus
 
 This Source Code Form is subject to the terms of the Mozilla Public License,
 v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -29,7 +29,7 @@ NOTE_END //n*/
 * ----------------------------------------------------------------------------
 * @author    direct Netware Group
 * @copyright (C) direct Netware Group - All rights reserved
-* @package   ext_dbus
+* @package   DBus.php
 * @since     v0.1.02
 * @license   http://www.direct-netware.de/redirect.php?licenses;mpl2
 *            Mozilla Public License, v. 2.0
@@ -51,7 +51,7 @@ all development packets)
 *
 * @author    direct Netware Group
 * @copyright (C) direct Netware Group - All rights reserved
-* @package   ext_dbus
+* @package   DBus.php
 * @since     v0.1.00
 * @license   http://www.direct-netware.de/redirect.php?licenses;mpl2
 *            Mozilla Public License, v. 2.0
@@ -88,14 +88,14 @@ Construct the class using old and new behavior
 	* @param object $event_handler EventHandler to use
 	* @since v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function __construct ($messages,$event_handler = NULL)
+	/*#ifndef(PHP4) */public /* #*/function __construct($messages, $event_handler = NULL)
 	{
-		if ($event_handler !== NULL) { $event_handler->debug ("#echo(__FILEPATH__)# -dbus->__construct (directMessage)- (#echo(__LINE__)#)"); }
+		if ($event_handler !== NULL) { $event_handler->debug("#echo(__FILEPATH__)# -dbus->__construct(directMessage)- (#echo(__LINE__)#)"); }
 
 		$this->dbus_header = NULL;
 		$this->dbus_raw = NULL;
 		$this->event_handler = $event_handler;
-		$this->nle = $messages->getNle ();
+		$this->nle = $messages->getNle();
 	}
 /*#ifdef(PHP4):
 /**
@@ -105,7 +105,7 @@ Construct the class using old and new behavior
 	* @param object $event_handler EventHandler to use
 	* @since v0.1.01
 *\/
-	function directMessage ($messages,$event_handler = NULL) { $this->__construct ($messages,$event_handler); }
+	function directMessage($messages, $event_handler = NULL) { $this->__construct($messages, $event_handler); }
 :#\n*/
 /**
 	* Get a "complete type" from the signature as defined in the D-BUS
@@ -117,25 +117,25 @@ Construct the class using old and new behavior
 	* @return string Complete type string definition
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */protected /* #*/function getCompleteType (&$signature,$offset,$type_count = 1)
+	/*#ifndef(PHP4) */protected /* #*/function getCompleteType(&$signature, $offset, $type_count = 1)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getCompleteType ($signature,$offset,$type_count)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->getCompleteType($signature, $offset, $type_count)- (#echo(__LINE__)#)"); }
 		$return = "";
 
-		if (((is_string ($signature)))&&(strlen ($signature) > $offset)&&($type_count))
+		if (is_string($signature) && strlen($signature) > $offset && $type_count)
 		{
 			$arrays_count = 0;
 			$dicts_count = 0;
-			$types_single = array ("b","d","g","i","n","o","q","s","t","u","x","y");
+			$types_single = array("b", "d", "g", "i", "n", "o", "q", "s", "t", "u", "x", "y");
 
-			while (($type_count)&&(isset ($signature[$offset])))
+			while ($type_count && isset($signature[$offset]))
 			{
-				if (in_array ($signature[$offset],$types_single))
+				if (in_array($signature[$offset], $types_single))
 				{
 					$return .= $signature[$offset];
-					if ((!$arrays_count)&&(!$dicts_count)) { $type_count--; }
+					if (!$arrays_count && !$dicts_count) { $type_count--; }
 				}
-				elseif (($signature[$offset] == "a")||($signature[$offset] == "v")) { $return .= $signature[$offset]; }
+				elseif ($signature[$offset] == "a" || $signature[$offset] == "v") { $return .= $signature[$offset]; }
 				else
 				{
 					switch ($signature[$offset])
@@ -152,7 +152,7 @@ Construct the class using old and new behavior
 						$return .= $signature[$offset];
 						$arrays_count--;
 
-						if ((!$arrays_count)&&(!$dicts_count)) { $type_count--; }
+						if ((!$arrays_count) && (!$dicts_count)) { $type_count--; }
 						break 1;
 					}
 					case "{":
@@ -167,7 +167,7 @@ Construct the class using old and new behavior
 						$return .= $signature[$offset];
 						$dicts_count--;
 
-						if ((!$arrays_count)&&(!$dicts_count)) { $type_count--; }
+						if ((!$arrays_count) && (!$dicts_count)) { $type_count--; }
 						break 1;
 					}
 					}
@@ -177,7 +177,7 @@ Construct the class using old and new behavior
 			}
 		}
 
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getCompleteType ()- (#echo(__LINE__)#) found ".$return); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->getCompleteType()- (#echo(__LINE__)#) found ".$return); }
 		return $return;
 	}
 
@@ -190,20 +190,20 @@ Construct the class using old and new behavior
 	* @return mixed Found field content on success; false on error
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function getHeader ($field = "")
+	/*#ifndef(PHP4) */public /* #*/function getHeader($field = "")
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getHeader ()- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->getHeader()- (#echo(__LINE__)#)"); }
 		$return = false;
 
 		if ($this->dbus_header != NULL)
 		{
 			if ($field)
 			{
-				if (is_numeric ($field))
+				if (is_numeric($field))
 				{
 					foreach ($this->dbus_header[6] as $header_field)
 					{
-						if ((is_bool ($return))&&($header_field[0] === $field)) { $return = $header_field[1]; }
+						if (is_bool($return) && $header_field[0] === $field) { $return = $header_field[1]; }
 					}
 				}
 				else
@@ -212,12 +212,12 @@ Construct the class using old and new behavior
 					{
 					case "endian":
 					{
-						if ((isset ($this->dbus_header[0]))&&(($this->dbus_header[0] == 108)||($this->dbus_header[0] == 66))) { $return = chr ($this->dbus_header[0]); }
+						if (isset($this->dbus_header[0]) && ($this->dbus_header[0] == 108 || $this->dbus_header[0] == 66)) { $return = chr($this->dbus_header[0]); }
 						break 1;
 					}
 					case "type":
 					{
-						if (isset ($this->dbus_header[1]))
+						if (isset($this->dbus_header[1]))
 						{
 							switch ($this->dbus_header[1])
 							{
@@ -249,22 +249,22 @@ Construct the class using old and new behavior
 					}
 					case "flags":
 					{
-						if (isset ($this->dbus_header[2])) { $return = $this->dbus_header[2]; }
+						if (isset($this->dbus_header[2])) { $return = $this->dbus_header[2]; }
 						break 1;
 					}
 					case "protocol":
 					{
-						if (isset ($this->dbus_header[3])) { $return = $this->dbus_header[3]; }
+						if (isset($this->dbus_header[3])) { $return = $this->dbus_header[3]; }
 						break 1;
 					}
 					case "body_size":
 					{
-						if (isset ($this->dbus_header[4])) { $return = $this->dbus_header[4]; }
+						if (isset($this->dbus_header[4])) { $return = $this->dbus_header[4]; }
 						break 1;
 					}
 					case "serial":
 					{
-						if (isset ($this->dbus_header[5])) { $return = $this->dbus_header[5]; }
+						if (isset($this->dbus_header[5])) { $return = $this->dbus_header[5]; }
 						break 1;
 					}
 					}
@@ -284,7 +284,7 @@ Construct the class using old and new behavior
 */
 	/*#ifndef(PHP4) */public /* #*/function getRaw ()
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getRaw ()- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->getRaw()- (#echo(__LINE__)#)"); }
 
 		if ($this->dbus_raw != NULL) { return $this->dbus_raw; }
 		else { return false; }
@@ -297,22 +297,22 @@ Construct the class using old and new behavior
 	* @return mixed Byte string on success; false on error
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function getRawBody ()
+	/*#ifndef(PHP4) */public /* #*/function getRawBody()
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->getRawBody ()- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->getRawBody()- (#echo(__LINE__)#)"); }
 		$return = false;
 
-		if (($this->dbus_header != NULL)&&($this->dbus_raw != NULL))
+		if ($this->dbus_header != NULL && $this->dbus_raw != NULL)
 		{
 			$body_start = 0;
 
-			if (isset ($this->dbus_header[4]))
+			if (isset($this->dbus_header[4]))
 			{
-				$body_start = (strlen ($this->dbus_raw)) - $this->dbus_header[4];
+				$body_start = strlen($this->dbus_raw) - $this->dbus_header[4];
 
 				if ($body_start >= 16)
 				{
-					if ($this->dbus_header[4]) { $return = substr ($this->dbus_raw,$body_start); }
+					if ($this->dbus_header[4]) { $return = substr($this->dbus_raw, $body_start); }
 					else { $return = ""; }
 				}
 			}
@@ -332,38 +332,38 @@ Construct the class using old and new behavior
 	* @return mixed Marshaled string on success; false on error
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function marshalArray ($signature,&$data,$position = 0)
+	/*#ifndef(PHP4) */public /* #*/function marshalArray($signature, &$data, $position = 0)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalArray ($signature,+data,$position)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->marshalArray($signature, +data, $position)- (#echo(__LINE__)#)"); }
 		$return = false;
 
-		if ((is_string ($signature))&&(is_array ($data)))
+		if (is_string($signature) && is_array($data))
 		{
 			$data_next = true;
 			$data_position = 0;
 			$return = "";
-			$signature_length = strlen ($signature);
+			$signature_length = strlen($signature);
 			$signature_position = 0;
 
-			while (($signature_position < $signature_length)&&(is_string ($return)))
+			while ($signature_position < $signature_length && is_string($return))
 			{
 				switch ($signature[$signature_position])
 				{
 				case "(":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,8);
-					$sub_signature = $this->getCompleteType ($signature,$signature_position);
+					$position += $this->marshalSetBoundary($return, $position, 8);
+					$sub_signature = $this->getCompleteType($signature, $signature_position);
 
-					if (($sub_signature)&&(is_array ($data[$data_position])))
+					if ($sub_signature && is_array($data[$data_position]))
 					{
-						$sub_signature = substr ($sub_signature,1,-1);
-						$sub_raw = $this->marshalArray ($sub_signature,$data[$data_position],$position);
+						$sub_signature = substr($sub_signature, 1, -1);
+						$sub_raw = $this->marshalArray($sub_signature, $data[$data_position], $position);
 
-						if (is_bool ($sub_raw)) { $return = false; }
+						if (is_bool($sub_raw)) { $return = false; }
 						else
 						{
-							$position += strlen ($sub_raw);
-							$signature_position += 1 + strlen ($sub_signature);
+							$position += strlen($sub_raw);
+							$signature_position += 1 + strlen($sub_signature);
 							$return .= $sub_raw;
 						}
 					}
@@ -378,24 +378,24 @@ Construct the class using old and new behavior
 				}
 				case "{":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,8);
-					$sub_signature = $this->getCompleteType ($signature,$signature_position);
+					$position += $this->marshalSetBoundary($return, $position, 8);
+					$sub_signature = $this->getCompleteType($signature, $signature_position);
 
-					if (($sub_signature)&&(is_array ($data[$data_position])))
+					if ($sub_signature && is_array($data[$data_position]))
 					{
-						$array_element_raw = reset ($data[$data_position]);
-						$array_element_raw = (is_array ($array_element_raw) ? array_merge (array (key ($data[$data_position])),(array_values ($data[$data_position]))) : array (key ($data[$data_position]),$array_element_raw));
-						$sub_signature = substr ($sub_signature,1,-1);
+						$array_element_raw = reset($data[$data_position]);
+						$array_element_raw = (is_array($array_element_raw) ? array_merge(array(key($data[$data_position])), (array_values($data[$data_position]))) : array(key($data[$data_position]), $array_element_raw));
+						$sub_signature = substr($sub_signature, 1, -1);
 
-						$sub_raw = $this->marshalArray ($sub_signature,$array_element_raw,$position);
+						$sub_raw = $this->marshalArray($sub_signature, $array_element_raw, $position);
 					}
 					else { $sub_raw = false; }
 
-					if (is_bool ($sub_raw)) { $return = false; }
+					if (is_bool($sub_raw)) { $return = false; }
 					else
 					{
-						$position += strlen ($sub_raw);
-						$signature_position += 1 + strlen ($sub_signature);
+						$position += strlen($sub_raw);
+						$signature_position += 1 + strlen($sub_signature);
 						$return .= $sub_raw;
 					}
 
@@ -408,26 +408,26 @@ Construct the class using old and new behavior
 				}
 				case "a":
 				{
-					$position += 4 + $this->marshalSetBoundary ($return,$position,4);
-					$sub_signature = $this->getCompleteType ($signature,($signature_position + 1));
+					$position += 4 + $this->marshalSetBoundary($return, $position, 4);
+					$sub_signature = $this->getCompleteType($signature, $signature_position + 1);
 
-					if (($sub_signature)&&(is_array ($data[$data_position])))
+					if ($sub_signature && is_array($data[$data_position]))
 					{
-						reset ($data[$data_position]);
+						reset($data[$data_position]);
 
-						$array_count = count ($data[$data_position]);
+						$array_count = count($data[$data_position]);
 						$array_offset = $position;
 						$array_position = 0;
 						$sub_raw = "";
 
-						while (($return)&&($array_position < $array_count))
+						while ($return && $array_position < $array_count)
 						{
-							$array_element_raw = array ($data[$data_position][$array_position]);
-							$array_element_raw = $this->marshalArray ($sub_signature,$array_element_raw,$position);
+							$array_element_raw = array($data[$data_position][$array_position]);
+							$array_element_raw = $this->marshalArray($sub_signature, $array_element_raw, $position);
 
-							if ((is_string ($return))&&(!is_bool ($array_element_raw)))
+							if (is_string($return) && (!is_bool($array_element_raw)))
 							{
-								$position += strlen ($array_element_raw);
+								$position += strlen($array_element_raw);
 								$sub_raw .= $array_element_raw;
 							}
 							else { $return = false; }
@@ -435,13 +435,13 @@ Construct the class using old and new behavior
 							$array_position++;
 						}
 
-						if (is_string ($return))
+						if (is_string($return))
 						{
-							$signature_position += strlen ($sub_signature);
-							$size = strlen ($sub_raw);
+							$signature_position += strlen($sub_signature);
+							$size = strlen($sub_raw);
 
-							$size -= ($this->typeGetPositionPadding ($sub_signature[0],$array_offset) - $array_offset);
-							$return .= (pack ("V",$size)).$sub_raw;
+							$size -= $this->typeGetPositionPadding($sub_signature[0], $array_offset) - $array_offset;
+							$return .= pack("V", $size).$sub_raw;
 						}
 					}
 					else { $return = false; }
@@ -450,9 +450,9 @@ Construct the class using old and new behavior
 				}
 				case "b":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,4);
+					$position += $this->marshalSetBoundary($return, $position, 4);
 
-					if (!isset ($data[$data_position])) { $return = false; }
+					if (!isset($data[$data_position])) { $return = false; }
 					elseif ($data[$data_position]) { $return .= "\x01\x00\x00\x00"; }
 					else { $return .= "\x00\x00\x00\x00"; }
 
@@ -461,18 +461,18 @@ Construct the class using old and new behavior
 				}
 				case "d":
 				{
-					$position += 8 + $this->marshalSetBoundary ($return,$position,8);
+					$position += 8 + $this->marshalSetBoundary($return, $position, 8);
 
-					if (strlen ("{$data[$data_position]}") < 9) { $return .= pack ("a8","{$data[$data_position]}"); }
+					if (strlen("{$data[$data_position]}") < 9) { $return .= pack("a8", "{$data[$data_position]}"); }
 					else { $return = false; }
 
 					break 1;
 				}
 				case "g":
 				{
-					$size = strlen ($data[$data_position]);
+					$size = strlen($data[$data_position]);
 				
-					if ((isset ($data[$data_position]))&&(strlen ($data[$data_position]) < 256)) { $return .= pack ("Ca*x",$size,$data[$data_position]); }
+					if (isset($data[$data_position]) && strlen($data[$data_position]) < 256) { $return .= pack("Ca*x", $size, $data[$data_position]); }
 					else { $return = false; }
 
 					$position += 2 + $size;
@@ -480,9 +480,9 @@ Construct the class using old and new behavior
 				}
 				case "i":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,4);
+					$position += $this->marshalSetBoundary($return, $position, 4);
 
-					if (isset ($data[$data_position])) { $return .= $this->marshalSetNle (pack ("L",$data[$data_position])); }
+					if (isset($data[$data_position])) { $return .= $this->marshalSetNle(pack("L", $data[$data_position])); }
 					else { $return = false; }
 
 					$position += 4;
@@ -490,9 +490,9 @@ Construct the class using old and new behavior
 				}
 				case "n":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,2);
+					$position += $this->marshalSetBoundary($return, $position, 2);
 
-					if (isset ($data[$data_position])) { $return .= $this->marshalSetNle (pack ("s",$data[$data_position])); }
+					if (isset($data[$data_position])) { $return .= $this->marshalSetNle(pack("s", $data[$data_position])); }
 					else { $return = false; }
 
 					$position += 2;
@@ -501,12 +501,12 @@ Construct the class using old and new behavior
 				case "o":
 				case "s":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,4);
+					$position += $this->marshalSetBoundary($return, $position, 4);
 
-					if (isset ($data[$data_position]))
+					if (isset($data[$data_position]))
 					{
-						$size = strlen ($data[$data_position]);
-						$return .= (pack ("V",$size)).$data[$data_position]."\x00";
+						$size = strlen($data[$data_position]);
+						$return .= pack("V", $size).$data[$data_position]."\x00";
 					}
 					else { $return = false; }
 
@@ -515,9 +515,9 @@ Construct the class using old and new behavior
 				}
 				case "q":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,2);
+					$position += $this->marshalSetBoundary($return, $position, 2);
 
-					if (isset ($data[$data_position])) { $return .= pack ("v",$data[$data_position]); }
+					if (isset($data[$data_position])) { $return .= pack("v", $data[$data_position]); }
 					else { $return = false; }
 
 					$position += 2;
@@ -525,18 +525,18 @@ Construct the class using old and new behavior
 				}
 				case "t":
 				{
-					$position += 8 + $this->marshalSetBoundary ($return,$position,8);
+					$position += 8 + $this->marshalSetBoundary($return, $position, 8);
 
-					if (strlen ("{$data[$data_position]}") < 9) { $return .= pack ("a8","{$data[$data_position]}"); }
+					if (strlen("{$data[$data_position]}") < 9) { $return .= pack("a8", "{$data[$data_position]}"); }
 					else { $return = false; }
 
 					break 1;
 				}
 				case "u":
 				{
-					$position += $this->marshalSetBoundary ($return,$position,4);
+					$position += $this->marshalSetBoundary($return, $position, 4);
 
-					if (isset ($data[$data_position])) { $return .= pack ("V",$data[$data_position]); }
+					if (isset($data[$data_position])) { $return .= pack("V", $data[$data_position]); }
 					else { $return = false; }
 
 					$position += 4;
@@ -544,16 +544,16 @@ Construct the class using old and new behavior
 				}
 				case "v":
 				{
-					if ((is_array ($data[$data_position]))&&(isset ($data[$data_position][0])))
+					if (is_array($data[$data_position]) && isset($data[$data_position][0]))
 					{
 						$sub_signature = "g".$data[$data_position][0];
-						$sub_raw = $this->marshalArray ($sub_signature,$data[$data_position],$position);
+						$sub_raw = $this->marshalArray($sub_signature, $data[$data_position], $position);
 
-						if (is_bool ($sub_raw)) { $return = false; }
+						if (is_bool($sub_raw)) { $return = false; }
 						else
 						{
 							$return .= $sub_raw;
-							$position += strlen ($sub_raw);
+							$position += strlen($sub_raw);
 						}
 					}
 					else { $return = false; }
@@ -563,9 +563,9 @@ Construct the class using old and new behavior
 				}
 				case "x":
 				{
-					$position += 8 + $this->marshalSetBoundary ($return,$position,8);
+					$position += 8 + $this->marshalSetBoundary($return, $position, 8);
 
-					if (strlen ("{$data[$data_position]}") < 9) { $return .= pack ("a8","{$data[$data_position]}"); }
+					if (strlen("{$data[$data_position]}") < 9) { $return .= pack("a8", "{$data[$data_position]}"); }
 					else { $return = false; }
 
 					break 1;
@@ -573,8 +573,8 @@ Construct the class using old and new behavior
 				case "y":
 				{
 
-					if ((is_string ($data[$data_position]))&&(strlen ($data[$data_position]) == 1)) { $return .= $data[$data_position]; }
-					elseif ((is_numeric ($data[$data_position]))&&($data[$data_position] < 256)) { $return .= pack ("C",$data[$data_position]); }
+					if (is_string($data[$data_position]) && strlen($data[$data_position]) == 1) { $return .= $data[$data_position]; }
+					elseif (is_numeric($data[$data_position]) && $data[$data_position] < 256) { $return .= pack("C", $data[$data_position]); }
 					else { $return = false; }
 
 					$position++;
@@ -604,18 +604,18 @@ Construct the class using old and new behavior
 	* @return integer Number of bytes added
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function marshalSetBoundary (&$data,$position,$boundary_spec)
+	/*#ifndef(PHP4) */public /* #*/function marshalSetBoundary(&$data, $position, $boundary_spec)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetBoundary (+data,$position,$boundary_spec)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->marshalSetBoundary(+data, $position, $boundary_spec)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
-		if (((is_string ($data)))&&($position > 1)&&($boundary_spec > 1))
+		if (is_string($data) && $position > 1 && $boundary_spec > 1)
 		{
-			$position = ($boundary_spec - ($position % $boundary_spec));
+			$position = $boundary_spec - ($position % $boundary_spec);
 
-			if (($position)&&($position < $boundary_spec))
+			if ($position && $position < $boundary_spec)
 			{
-				if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetBoundary ()- (#echo(__LINE__)#) added $position NUL bytes to conform to the requested boundary"); }
+				if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->marshalSetBoundary()- (#echo(__LINE__)#) added $position NUL bytes to conform to the requested boundary"); }
 				for ($i = 0;$i < $position;$i++) { $data .= "\x00"; }
 				$return = $position;
 			}
@@ -632,22 +632,22 @@ Construct the class using old and new behavior
 	* @return string Byte string
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */protected /* #*/function marshalSetNle ($data)
+	/*#ifndef(PHP4) */protected /* #*/function marshalSetNle($data)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->marshalSetNle (+data)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->marshalSetNle(+data)- (#echo(__LINE__)#)"); }
 
-		if ((!$this->nle)&&(strlen ($data) > 1))
+		if ((!$this->nle) && strlen($data) > 1)
 		{
-			$bytes_inverted = array ();
+			$bytes_inverted = array();
 			$position = 0;
 
-			for ($i = (strlen ($data) - 1);$i > -1;$i--)
+			for ($i = (strlen($data) - 1);$i > -1;$i--)
 			{
 				$bytes_inverted[$position] = $data[$i];
 				$position++;
 			}
 
-			return implode ("",$bytes_inverted);
+			return implode("", $bytes_inverted);
 		}
 		else { return $data; }
 	}
@@ -655,18 +655,18 @@ Construct the class using old and new behavior
 /**
 	* Sets the given header array and raw string for this message.
 	*
-	* @param  array $header Header array parsed with "unmarshal ()"
+	* @param  array $header Header array parsed with "unmarshal()"
 	* @param  string $raw Raw binary string
 	* @param  boolean $overwrite True to ignore data already set
 	* @return boolean True on success
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function set ($header,$raw,$overwrite = false)
+	/*#ifndef(PHP4) */public /* #*/function set($header, $raw, $overwrite = false)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->set (+header,$raw,+overwrite)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->set(+header, $raw, +overwrite)- (#echo(__LINE__)#)"); }
 		$return = false;
 
-		if ((is_array ($header))&&(is_string ($raw))&&(($overwrite)||(($this->dbus_header == NULL)&&($this->dbus_raw == NULL))))
+		if (is_array($header) && is_string($raw) && ($overwrite || ($this->dbus_header == NULL && $this->dbus_raw == NULL)))
 		{
 			$return = true;
 			$this->dbus_header = $header;
@@ -682,9 +682,9 @@ Construct the class using old and new behavior
 	* @param object $event_handler EventHandler to use
 	* @since v0.1.02
 */
-	/*#ifndef(PHP4) */public /* #*/function setEventHandler ($event_handler)
+	/*#ifndef(PHP4) */public /* #*/function setEventHandler($event_handler)
 	{
-		if ($event_handler !== NULL) { $event_handler->debug ("#echo(__FILEPATH__)# -dbus->setEventHandler (+event_handler)- (#echo(__LINE__)#)"); }
+		if ($event_handler !== NULL) { $event_handler->debug("#echo(__FILEPATH__)# -dbus->setEventHandler(+event_handler)- (#echo(__LINE__)#)"); }
 		$this->event_handler = $event_handler;
 	}
 
@@ -695,12 +695,12 @@ Construct the class using old and new behavior
 	* @return integer Defined boundary
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function typeGetPadding ($type)
+	/*#ifndef(PHP4) */public /* #*/function typeGetPadding($type)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->typeGetPadding ($type)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->typeGetPadding($type)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
-		if (is_string ($type))
+		if (is_string($type))
 		{
 			switch ($type)
 			{
@@ -783,17 +783,17 @@ Construct the class using old and new behavior
 	* @return integer New position (Position of the needed boundary)
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function typeGetPositionPadding ($type,$position)
+	/*#ifndef(PHP4) */public /* #*/function typeGetPositionPadding($type, $position)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->typeGetPositionPadding ($type,$position)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->typeGetPositionPadding($type, $position)- (#echo(__LINE__)#)"); }
 
-		$boundary_spec = $this->typeGetPadding ($type);
+		$boundary_spec = $this->typeGetPadding($type);
 		$return = $position;
 
 		if ($boundary_spec > 0)
 		{
-			$position = ($boundary_spec - ($position % $boundary_spec));
-			if (($position)&&($position < $boundary_spec)) { $return += $position; }
+			$position = $boundary_spec - ($position % $boundary_spec);
+			if ($position && $position < $boundary_spec) { $return += $position; }
 		}
 
 		return $return;
@@ -812,42 +812,42 @@ Construct the class using old and new behavior
 	* @return mixed Data array on success; false on error
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */public /* #*/function unmarshal ($le,$signature,&$data,$position = -1)
+	/*#ifndef(PHP4) */public /* #*/function unmarshal($le, $signature, &$data, $position = -1)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshal (+le,$signature,+data,$position)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->unmarshal(+le, $signature, +data, $position)- (#echo(__LINE__)#)"); }
 		$return = false;
 
-		if ((is_string ($signature))&&(is_string ($data)))
+		if (is_string($signature) && is_string($data))
 		{
 			$position_element = false;
-			$return = array ();
+			$return = array();
 			$return_position = 0;
-			$signature_length = strlen ($signature);
+			$signature_length = strlen($signature);
 			$signature_position = 0;
 
 			if ($position < 0) { $position = 0; }
 			else { $position_element = true; }
 
-			while (($signature_position < $signature_length)&&(is_array ($return)))
+			while ($signature_position < $signature_length && is_array($return))
 			{
 				switch ($signature[$signature_position])
 				{
 				case "(":
 				{
-					$position += $this->unmarshalGetBoundary ($position,8);
-					$sub_signature = $this->getCompleteType ($signature,$signature_position);
+					$position += $this->unmarshalGetBoundary($position, 8);
+					$sub_signature = $this->getCompleteType($signature, $signature_position);
 
 					if ($sub_signature)
 					{
-						$sub_signature = substr ($sub_signature,1,-1);
-						$bytes_unpacked = $this->unmarshal ($le,$sub_signature,$data,$position);
+						$sub_signature = substr($sub_signature, 1, -1);
+						$bytes_unpacked = $this->unmarshal($le, $sub_signature, $data, $position);
 
 						if ($bytes_unpacked)
 						{
-							if (isset ($bytes_unpacked['position']))
+							if (isset($bytes_unpacked['position']))
 							{
 								$position = $bytes_unpacked['position'];
-								unset ($bytes_unpacked['position']);
+								unset($bytes_unpacked['position']);
 							}
 
 							$return[$return_position] = $bytes_unpacked;
@@ -859,7 +859,7 @@ Construct the class using old and new behavior
 					if ($return)
 					{
 						$return_position++;
-						$signature_position += 1 + strlen ($sub_signature);
+						$signature_position += 1 + strlen($sub_signature);
 					}
 
 					break 1;
@@ -867,23 +867,23 @@ Construct the class using old and new behavior
 				case ")": break 1;
 				case "{":
 				{
-					$position += $this->unmarshalGetBoundary ($position,8);
-					$sub_signature = $this->getCompleteType ($signature,$signature_position);
+					$position += $this->unmarshalGetBoundary($position, 8);
+					$sub_signature = $this->getCompleteType($signature, $signature_position);
 
-					if (($sub_signature)&&(strlen ($this->getCompleteType ($sub_signature,1)) == 1)&&(strlen ($sub_signature) == (strlen ($this->getCompleteType ($sub_signature,2)) + 3)))
+					if ($sub_signature && strlen($this->getCompleteType($sub_signature, 1)) == 1 && strlen($sub_signature) == strlen($this->getCompleteType($sub_signature, 2)) + 3)
 					{
-						$sub_signature = substr ($sub_signature,1,-1);
-						$bytes_unpacked = $this->unmarshal ($le,$sub_signature,$data,$position);
+						$sub_signature = substr($sub_signature, 1, -1);
+						$bytes_unpacked = $this->unmarshal($le, $sub_signature, $data, $position);
 
 						if ($bytes_unpacked)
 						{
-							if (isset ($bytes_unpacked['position']))
+							if (isset($bytes_unpacked['position']))
 							{
 								$position = $bytes_unpacked['position'];
-								unset ($bytes_unpacked['position']);
+								unset($bytes_unpacked['position']);
 							}
 
-							$return[$return_position] = array ($bytes_unpacked[0] => $bytes_unpacked[1]);
+							$return[$return_position] = array($bytes_unpacked[0] => $bytes_unpacked[1]);
 						}
 						else { $return = false; }
 					}
@@ -892,7 +892,7 @@ Construct the class using old and new behavior
 					if ($return)
 					{
 						$return_position++;
-						$signature_position += 1 + strlen ($sub_signature);
+						$signature_position += 1 + strlen($sub_signature);
 					}
 
 					break 1;
@@ -900,35 +900,35 @@ Construct the class using old and new behavior
 				case "}": break 1;
 				case "a":
 				{
-					$position += $this->unmarshalGetBoundary ($position,4);
-					$sub_read = $this->unmarshalRead ($data,$position,4);
+					$position += $this->unmarshalGetBoundary($position, 4);
+					$sub_read = $this->unmarshalRead($data, $position, 4);
  
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$bytes_unpacked = (($le == "B") ? unpack ("N",$sub_read) : unpack ("V",$sub_read));
+						$bytes_unpacked = (($le == "B") ? unpack("N", $sub_read) : unpack("V", $sub_read));
 						$position += 4;
 						$sub_signature = "";
 
-						if ($bytes_unpacked) { $sub_signature = $this->getCompleteType ($signature,($signature_position + 1)); }
+						if ($bytes_unpacked) { $sub_signature = $this->getCompleteType($signature, $signature_position + 1); }
 
 						if ($sub_signature)
 						{
-							$position = $this->typeGetPositionPadding ($sub_signature[0],$position);
-							$return[$return_position] = array ();
+							$position = $this->typeGetPositionPadding($sub_signature[0], $position);
+							$return[$return_position] = array();
 							$sub_size = $bytes_unpacked[1];
 
-							while (($return)&&($sub_size))
+							while ($return && $sub_size)
 							{
-								$bytes_unpacked = $this->unmarshal ($le,$sub_signature,$data,$position);
+								$bytes_unpacked = $this->unmarshal($le, $sub_signature, $data, $position);
 
 								if ($bytes_unpacked)
 								{
 									$sub_size -= ($bytes_unpacked['position'] - $position);
 									$position = $bytes_unpacked['position'];
-									unset ($bytes_unpacked['position']);
+									unset($bytes_unpacked['position']);
 
-									$return[$return_position] = array_merge ($return[$return_position],$bytes_unpacked);
+									$return[$return_position] = array_merge($return[$return_position], $bytes_unpacked);
 								}
 								else { $return = false; }
 							}
@@ -936,7 +936,7 @@ Construct the class using old and new behavior
 							if ($return)
 							{
 								$return_position++;
-								$signature_position += strlen ($sub_signature);
+								$signature_position += strlen($sub_signature);
 							}
 						}
 						elseif ($bytes_unpacked) { $return = false; }
@@ -946,10 +946,10 @@ Construct the class using old and new behavior
 				}
 				case "b":
 				{
-					$position += $this->unmarshalGetBoundary ($position,4);
-					$sub_read = $this->unmarshalRead ($data,$position,4);
+					$position += $this->unmarshalGetBoundary($position, 4);
+					$sub_read = $this->unmarshalRead($data, $position, 4);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
 						if ($le == "B") { $return[$return_position] = (($sub_read[3] == "\x01") ? true : false); }
@@ -963,13 +963,13 @@ Construct the class using old and new behavior
 				}
 				case "d":
 				{
-					$position += $this->unmarshalGetBoundary ($position,8);
-					$sub_read = $this->unmarshalRead ($data,$position,8);
+					$position += $this->unmarshalGetBoundary($position, 8);
+					$sub_read = $this->unmarshalRead($data, $position, 8);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return[$return_position] = $this->unmarshalSetLe ($le,"",$sub_read);
+						$return[$return_position] = $this->unmarshalSetLe($le, "", $sub_read);
 						$return_position++;
 						$position += 8;
 					}
@@ -978,17 +978,17 @@ Construct the class using old and new behavior
 				}
 				case "g":
 				{
-					$sub_read = $this->unmarshalRead ($data,$position,1);
+					$sub_read = $this->unmarshalRead($data, $position, 1);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$bytes_unpacked = unpack ("C",$sub_read);
+						$bytes_unpacked = unpack("C", $sub_read);
 						$position++;
 
 						if ($bytes_unpacked)
 						{
-							$return[$return_position] = $this->unmarshalRead ($data,$position,$bytes_unpacked[1]);
+							$return[$return_position] = $this->unmarshalRead($data, $position, $bytes_unpacked[1]);
 							$return_position++;
 							$position += 1 + $bytes_unpacked[1];
 						}
@@ -998,13 +998,13 @@ Construct the class using old and new behavior
 				}
 				case "i":
 				{
-					$position += $this->unmarshalGetBoundary ($position,4);
-					$sub_read = $this->unmarshalRead ($data,$position,4);
+					$position += $this->unmarshalGetBoundary($position, 4);
+					$sub_read = $this->unmarshalRead($data, $position, 4);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return[$return_position] = $this->unmarshalSetLe ($le,"L",$sub_read);
+						$return[$return_position] = $this->unmarshalSetLe($le, "L", $sub_read);
 						$return_position++;
 						$position += 4;
 					}
@@ -1013,13 +1013,13 @@ Construct the class using old and new behavior
 				}
 				case "n":
 				{
-					$position += $this->unmarshalGetBoundary ($position,2);
-					$sub_read = $this->unmarshalRead ($data,$position,2);
+					$position += $this->unmarshalGetBoundary($position, 2);
+					$sub_read = $this->unmarshalRead($data, $position, 2);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return[$return_position] = $this->unmarshalSetLe ($le,"s",$sub_read);
+						$return[$return_position] = $this->unmarshalSetLe($le, "s", $sub_read);
 						$return_position++;
 						$position += 2;
 					}
@@ -1029,18 +1029,18 @@ Construct the class using old and new behavior
 				case "o":
 				case "s":
 				{
-					$position += $this->unmarshalGetBoundary ($position,4);
-					$sub_read = $this->unmarshalRead ($data,$position,4);
+					$position += $this->unmarshalGetBoundary($position, 4);
+					$sub_read = $this->unmarshalRead($data, $position, 4);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$bytes_unpacked = (($le == "B") ? unpack ("N",$sub_read) : unpack ("V",$sub_read));
+						$bytes_unpacked = (($le == "B") ? unpack("N", $sub_read) : unpack("V", $sub_read));
 						$position += 4;
 
 						if ($bytes_unpacked)
 						{
-							$return[$return_position] = $this->unmarshalRead ($data,$position,$bytes_unpacked[1]);
+							$return[$return_position] = $this->unmarshalRead($data, $position, $bytes_unpacked[1]);
 							$return_position++;
 							$position += 1 + $bytes_unpacked[1];
 						}
@@ -1050,13 +1050,13 @@ Construct the class using old and new behavior
 				}
 				case "q":
 				{
-					$position += $this->unmarshalGetBoundary ($position,2);
-					$sub_read = $this->unmarshalRead ($data,$position,2);
+					$position += $this->unmarshalGetBoundary($position, 2);
+					$sub_read = $this->unmarshalRead($data, $position, 2);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return = (($le == "B") ? array_merge ($return,(unpack ("n",$sub_read))) : array_merge ($return,(unpack ("v",$sub_read))));
+						$return = (($le == "B") ? array_merge($return, (unpack("n", $sub_read))) : array_merge($return, (unpack("v", $sub_read))));
 						$return_position++;
 						$position += 4;
 					}
@@ -1065,13 +1065,13 @@ Construct the class using old and new behavior
 				}
 				case "t":
 				{
-					$position += $this->unmarshalGetBoundary ($position,8);
-					$sub_read = $this->unmarshalRead ($data,$position,8);
+					$position += $this->unmarshalGetBoundary($position, 8);
+					$sub_read = $this->unmarshalRead($data, $position, 8);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return[$return_position] = $this->unmarshalSetLe ($le,"",$sub_read);
+						$return[$return_position] = $this->unmarshalSetLe($le, "", $sub_read);
 						$return_position++;
 						$position += 8;
 					}
@@ -1080,13 +1080,13 @@ Construct the class using old and new behavior
 				}
 				case "u":
 				{
-					$position += $this->unmarshalGetBoundary ($position,4);
-					$sub_read = $this->unmarshalRead ($data,$position,4);
+					$position += $this->unmarshalGetBoundary($position, 4);
+					$sub_read = $this->unmarshalRead($data, $position, 4);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return = (($le == "B") ? array_merge ($return,(unpack ("N",$sub_read))) : array_merge ($return,(unpack ("V",$sub_read))));
+						$return = (($le == "B") ? array_merge($return, (unpack("N", $sub_read))) : array_merge($return, (unpack("V", $sub_read))));
 						$return_position++;
 						$position += 4;
 					}
@@ -1095,29 +1095,29 @@ Construct the class using old and new behavior
 				}
 				case "v":
 				{
-					$sub_read = $this->unmarshalRead ($data,$position,1);
+					$sub_read = $this->unmarshalRead($data, $position, 1);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$bytes_unpacked = unpack ("C",$sub_read);
+						$bytes_unpacked = unpack("C", $sub_read);
 						$position++;
 
 						if ($bytes_unpacked)
 						{
-							$sub_read = $this->unmarshalRead ($data,$position,$bytes_unpacked[1]);
+							$sub_read = $this->unmarshalRead($data, $position, $bytes_unpacked[1]);
 							$position += 1 + $bytes_unpacked[1];
 						}
 
-						$return[$return_position] = array ($sub_read);
-						$bytes_unpacked = $this->unmarshal ($le,$sub_read,$data,$position);
+						$return[$return_position] = array($sub_read);
+						$bytes_unpacked = $this->unmarshal($le, $sub_read, $data, $position);
 
-						if (is_bool ($bytes_unpacked)) { $return = false; }
+						if (is_bool($bytes_unpacked)) { $return = false; }
 						else
 						{
 							$position = $bytes_unpacked['position'];
-							unset ($bytes_unpacked['position']);
-							$return[$return_position] = array_merge ($return[$return_position],$bytes_unpacked);
+							unset($bytes_unpacked['position']);
+							$return[$return_position] = array_merge($return[$return_position], $bytes_unpacked);
 						}
 
 						$return_position++;
@@ -1127,13 +1127,13 @@ Construct the class using old and new behavior
 				}
 				case "x":
 				{
-					$position += $this->unmarshalGetBoundary ($position,8);
-					$sub_read = $this->unmarshalRead ($data,$position,8);
+					$position += $this->unmarshalGetBoundary($position, 8);
+					$sub_read = $this->unmarshalRead($data, $position, 8);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						$return[$return_position] = $this->unmarshalSetLe ($le,"",$sub_read);
+						$return[$return_position] = $this->unmarshalSetLe($le, "", $sub_read);
 						$return_position++;
 						$position += 8;
 					}
@@ -1142,13 +1142,13 @@ Construct the class using old and new behavior
 				}
 				case "y":
 				{
-					$sub_read = $this->unmarshalRead ($data,$position,1);
+					$sub_read = $this->unmarshalRead($data, $position, 1);
 
-					if (is_bool ($sub_read)) { $return = false; }
+					if (is_bool($sub_read)) { $return = false; }
 					else
 					{
-						if ((is_int ($le))&&($le == $signature_position)) { $le = $sub_read; }
-						$bytes_unpacked = unpack ("C",$sub_read);
+						if (is_int($le) && $le == $signature_position) { $le = $sub_read; }
+						$bytes_unpacked = unpack("C", $sub_read);
 
 						if ($bytes_unpacked)
 						{
@@ -1167,7 +1167,7 @@ Construct the class using old and new behavior
 				$signature_position++;
 			}
 
-			if ((is_array ($return))&&($position_element)) { $return['position'] = $position; }
+			if (is_array($return) && $position_element) { $return['position'] = $position; }
 		}
 		else { $return = false; }
 
@@ -1181,15 +1181,15 @@ Construct the class using old and new behavior
 	* @param  integer $boundary_spec Boundary to use
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */protected /* #*/function unmarshalGetBoundary ($position,$boundary_spec)
+	/*#ifndef(PHP4) */protected /* #*/function unmarshalGetBoundary($position, $boundary_spec)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalGetBoundary ($position,$boundary_spec)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->unmarshalGetBoundary($position, $boundary_spec)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
 		if ($boundary_spec > 0)
 		{
-			$position = ($boundary_spec - ($position % $boundary_spec));
-			if (($position)&&($position < $boundary_spec)) { $return = $position; }
+			$position = $boundary_spec - ($position % $boundary_spec);
+			if ($position && $position < $boundary_spec) { $return = $position; }
 		}
 
 		return $return;
@@ -1204,11 +1204,11 @@ Construct the class using old and new behavior
 	* @return mixed Data read on success; false on error
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */protected /* #*/function unmarshalRead (&$data,$offset,$length)
+	/*#ifndef(PHP4) */protected /* #*/function unmarshalRead(&$data, $offset, $length)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalRead (+data,$offset,$length)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->unmarshalRead(+data, $offset, $length)- (#echo(__LINE__)#)"); }
 
-		if ((is_string ($data))&&(is_numeric ($offset))&&(is_numeric ($length))&&(strlen ($data) >= $offset + $length)) { return substr ($data,$offset,$length); }
+		if (is_string($data) && is_numeric($offset) && is_numeric($length) && strlen($data) >= $offset + $length) { return substr($data, $offset, $length); }
 		else { return false; }
 	}
 
@@ -1222,19 +1222,19 @@ Construct the class using old and new behavior
 	* @return Byte data (byteswapped if necessary)
 	* @since  v0.1.00
 */
-	/*#ifndef(PHP4) */protected /* #*/function unmarshalSetLe ($le,$unpack_mode,$data)
+	/*#ifndef(PHP4) */protected /* #*/function unmarshalSetLe($le, $unpack_mode, $data)
 	{
-		if ($this->event_handler !== NULL) { $this->event_handler->debug ("#echo(__FILEPATH__)# -dbus->unmarshalSetLe ($le,$unpack_mode,+data)- (#echo(__LINE__)#)"); }
+		if ($this->event_handler !== NULL) { $this->event_handler->debug("#echo(__FILEPATH__)# -dbus->unmarshalSetLe($le, $unpack_mode, +data)- (#echo(__LINE__)#)"); }
 		$return = 0;
 
-		if (is_string ($data))
+		if (is_string($data))
 		{
-			if ((($le == "B")&&($this->nle))||(($le == "l")&&(!$this->nle)))
+			if (($le == "B" && $this->nle) || ($le == "l" && !$this->nle))
 			{
-				$bytes_inverted = array ();
+				$bytes_inverted = array();
 				$position = 0;
 
-				for ($i = (strlen ($data) - 1);$i > -1;$i--)
+				for ($i = strlen($data) - 1;$i > -1;$i--)
 				{
 					$bytes_inverted[$position] = $data[$i];
 					$position++;
@@ -1242,14 +1242,14 @@ Construct the class using old and new behavior
 
 				if ($unpack_mode)
 				{
-					$bytes_inverted = unpack ($unpack_mode,(implode ("",$bytes_inverted)));
+					$bytes_inverted = unpack($unpack_mode, implode("", $bytes_inverted));
 					if ($bytes_inverted) { $return = $bytes_inverted[1]; }
 				}
-				else { $return = implode ("",$bytes_inverted); }
+				else { $return = implode("", $bytes_inverted); }
 			}
 			elseif ($unpack_mode)
 			{
-				$bytes_unpacked = unpack ($unpack_mode,$data);
+				$bytes_unpacked = unpack($unpack_mode, $data);
 				if ($bytes_unpacked) { $return = $bytes_unpacked[1]; }
 			}
 			else { $return = $data; }
