@@ -60,14 +60,6 @@ all development packets)
 class directMessages
 {
 /**
-	* @var string $dbus_guid D-BUS GUID
-*/
-	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_guid;
-/**
-	* @var string $dbus_name Given D-BUS name by the bus
-*/
-	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_name;
-/**
 	* @var array $dbus_broken_data_header Incomplete data header
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_broken_data_header;
@@ -79,6 +71,14 @@ class directMessages
 	* @var integer $dbus_broken_length Incomplete data length expected
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_broken_length;
+/**
+	* @var string $dbus_guid D-BUS GUID
+*/
+	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_guid;
+/**
+	* @var string $dbus_name Given D-BUS name by the bus
+*/
+	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $dbus_name;
 /**
 	* @var integer $dbus_requests D-BUS request counter
 */
@@ -128,10 +128,10 @@ Construct the class using old and new behavior
 			$this->dbus_requests = 1;
 			$this->dbus_session =& $session;
 			$this->dbus_sync_timeout = $sync_timeout;
-			$this->dbus_name = "";
-			$this->dbus_name = $this->getName();
 			$this->event_handler = $event_handler;
 			$this->nle = $session->getNle();
+
+			$this->dbus_name = $this->getName();
 		}
 	}
 /*#ifdef(PHP4):
@@ -145,6 +145,13 @@ Construct the class using old and new behavior
 *\/
 	function directMessages(&$session, $sync_timeout = 3, $event_handler = NULL) { $this->__construct($session, $sync_timeout, $event_handler); }
 :#\n*/
+/**
+	* Destructor (PHP5) __destruct (directMessages)
+	*
+	* @since v0.1.00
+*/
+	/*#ifndef(PHP4) */public /* #*/function __destruct() { $this->dbus_session = NULL; }
+
 /**
 	* Reads an incoming message and delegates it if requested.
 	* 

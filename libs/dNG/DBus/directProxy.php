@@ -180,6 +180,13 @@ Construct the class using old and new behavior
 	function directProxy(&$session, $path, $interface, $destination, $xml_array, $event_handler = NULL) { $this->__construct($session, $path, $interface, $destination, $xml_array, $event_handler); }
 :#\n*/
 /**
+	* Destructor (PHP5) __destruct (directMessage)
+	*
+	* @since v0.1.00
+*/
+	/*#ifndef(PHP4) */public /* #*/function __destruct() { $this->dbus_session = NULL; }
+
+/**
 	* This method is called for "overloaded" or "inaccessible" methods of an
 	* object. We use it to dynamically provide an interface generated from XML
 	* data given to the constructor. Use "isReady()" to check if this is a valid

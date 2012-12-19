@@ -39,8 +39,8 @@ NOTE_END //n*/
 namespace dNG\DBus;
 /* #*/
 /*#use(direct_use) */
-use dNG\data\directFile,
-    dNG\data\directXmlParser;
+use dNG\data\directFile;
+use dNG\data\directXmlParser;
 /* #\n*/
 
 /* -------------------------------------------------------------------------
@@ -90,9 +90,9 @@ class directSession
 */
 	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $nle;
 /**
-	* @var boolean $socket_available True if fsockopen is available
+	* @var boolean $PHP_socket True if fsockopen is available
 */
-	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $socket_available;
+	/*#ifndef(PHP4) */protected/* #*//*#ifdef(PHP4):var:#*/ $PHP_socket;
 /**
 	* @var resource $socket_dbus Opened D-BUS socket
 */
@@ -149,7 +149,7 @@ Construct the class using old and new behavior
 		if (pack("S", 1) == "\x01\x00") { $this->nle = true; }
 		else { $this->nle = false; }
 
-		$this->socket_available = function_exists("fsockopen");
+		$this->PHP_socket = function_exists("fsockopen");
 		$this->socket_dbus = NULL;
 
 		if (class_exists(/*#ifdef(PHP5n) */'dNG\DBus\directMessage'/* #*//*#ifndef(PHP5n):"directMessage":#*/) && class_exists(/*#ifdef(PHP5n) */'dNG\DBus\directMessages'/* #*//*#ifndef(PHP5n):"directMessages":#*/)) { $this->socket_path = ((stripos($path, "unix:abstract://") === 0) ? preg_replace("#unix:abstract:\/\/#i", "unix://\x00", $path) : $path); }
@@ -559,7 +559,7 @@ Listeners
 		$return = false;
 
 		if (is_resource($this->socket_dbus)) { $return = false; }
-		elseif ($this->socket_available)
+		elseif ($this->PHP_socket)
 		{
 			$error_code = 0;
 			$error = "";

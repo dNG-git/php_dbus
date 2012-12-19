@@ -108,6 +108,13 @@ Construct the class using old and new behavior
 	function directMessage($messages, $event_handler = NULL) { $this->__construct($messages, $event_handler); }
 :#\n*/
 /**
+	* Destructor (PHP5) __destruct (directMessage)
+	*
+	* @since v0.1.00
+*/
+	/*#ifndef(PHP4) */public /* #*/function __destruct() { /* Nothing to do for me */ }
+
+/**
 	* Get a "complete type" from the signature as defined in the D-BUS
 	* Specification 1.0.
 	*
