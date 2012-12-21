@@ -1,7 +1,7 @@
 # D-BUS PHP Binding
 
 # Source file or directory to parse
-#source: ../dNG
+#source: ../libs
 # Use a generated source tree directory
 
 # Directory where to save the generated documentation
