@@ -34,11 +34,10 @@ NOTE_END //n*/
 * @license   http://www.direct-netware.de/redirect.php?licenses;mpl2
 *            Mozilla Public License, v. 2.0
 */
-/*#ifdef(PHP5n) */
 
+/*#ifdef(PHP5n) */
 namespace dNG\DBus;
-/* #*/
-/*#use(direct_use) */
+/* #*//*#use(direct_use) */
 use dNG\data\directFile;
 use dNG\data\directXmlParser;
 /* #\n*/
