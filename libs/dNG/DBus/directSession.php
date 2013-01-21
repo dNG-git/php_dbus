@@ -329,12 +329,12 @@ Listeners
 
 			if ($is_valid)
 			{
-				$listener = "(\*|".(preg_quote($type)).")";
+				$listener = "(\*|".(preg_quote($type, "#")).")";
 
 				for ($i = 1;$i < 4;$i++)
 				{
 					$header_array = $message->getHeader($i);
-					$listener .= ($header_array ? "\:(\*|".preg_quote($header_array[1]).")" : "\:\*");
+					$listener .= ($header_array ? "\:(\*|".preg_quote($header_array[1], "#").")" : "\:\*");
 				}
 
 				$listener = "($listener)";
